@@ -2,7 +2,7 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Link, Tabs } from 'expo-router';
 import { Pressable, Text } from 'react-native';
-
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import {Colors} from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
@@ -42,7 +42,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home" size={24} color='black' />,
           headerRight: () => (
             <Link href="/modal" asChild>
               <Pressable>
@@ -63,7 +63,7 @@ export default function TabLayout() {
         name="two"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="golf-cart" size={24} color='black' />,
         }}
       />
     </Tabs>
