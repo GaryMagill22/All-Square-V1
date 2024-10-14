@@ -21,12 +21,12 @@ const content = [
   },
   {
     title: "Play.",
-    bg: ColorPalette.brown,
-    fontColor: ColorPalette.sky,
+    bg: ColorPalette.lightBrown,
+    fontColor: ColorPalette.brown,
   },
   {
     title: "Win.",
-    bg: ColorPalette.orange,
+    bg: ColorPalette.darkBlue,
     fontColor: ColorPalette.blue,
   },
   {

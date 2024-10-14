@@ -42,4 +42,6 @@ export const ColorPalette = {
   input: '#EEE9F0',
   selected: '#F7F2F9',
   dark: '#2F2D32',
+  darkBlue: '#14375C',
+  lightBrown: '#d4bc89',
 }
