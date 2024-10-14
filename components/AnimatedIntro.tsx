@@ -27,7 +27,7 @@ const content = [
   {
     title: "Win.",
     bg: ColorPalette.darkBlue,
-    fontColor: ColorPalette.blue,
+    fontColor: ColorPalette.lightBrown,
   },
   {
     title: "Let's go!",
