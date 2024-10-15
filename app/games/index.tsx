@@ -25,7 +25,7 @@ const Games = () => {
                 const gameData = doc.data() as Game;
                 games.push(gameData);
             });
-            console.log("Fetched games:", games); // Or use these games in your UI
+            // console.log("Fetched games:", games); // Or use these games in your UI
             setGames(games);
         } catch (error) {
             console.error("Error fetching games:", error);
