@@ -21,4 +21,17 @@ export const defaultStyles = StyleSheet.create({
     flex: 1,
     backgroundColor: ColorPalette.light,
   },
+  iosButton: {
+    backgroundColor: '#007aff',
+    borderRadius: 10,
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+    width: 200,
+  },
+  iosButtonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
 });

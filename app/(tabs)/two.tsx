@@ -3,7 +3,7 @@ import { Text, View } from '@/components/Themed';
 import { FIREBASE_AUTH } from '@/FirebaseConfig';
 
 
-export default function TabTwoScreen() {
+export default function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Profile</Text>
