@@ -1,73 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import Collapsible from 'react-native-collapsible'; // Import for accordion
-import { FIREBASE_DB } from '../FirebaseConfig'; // Import your Firebase DB
+import GamesList from './GamesList'; // Import your custom component
 import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
-
+import { FIREBASE_DB } from '@/FirebaseConfig'; // Import your Firebase configuration
 
 interface Game {
     id: string;
     name: string;
+    minPlayers: number;
+    maxPlayers: number;
     howToPlay: string;
 }
 
+const GameAccordian: React.FC<{}> = () => {
+    const [games, setGames] = useState<Game[]>([]);
+    const [expandedGames, setExpandedGames] = useState<string[]>([]); // Track expanded game IDs
 
-const GameAccordion: React.FC<{ games: Game[] }> = ({ games }) => {
-
-    const [activeGame, setActiveGame] = useState(null); // State for active game
-
-    // interface GameAccordionProps {
-    //     games: Game[];
-    // }
-
-    // const handleGameClick = (gameId: string) => {
-    //     setActiveGame(gameId === activeGame ? null : gameId);
-    // };
-
-
+    const handleGameClick = (gameId: string) => {
+        setExpandedGames((prevExpanded) =>
+            prevExpanded.includes(gameId)
+                ? prevExpanded.filter((id) => id !== gameId) // Remove if already expanded
+                : [...prevExpanded, gameId] // Add if not expanded
+        );
+    };
 
     const fetchGames = async () => {
         const gamesCollection = collection(FIREBASE_DB, "games");
         try {
             const querySnapshot = await getDocs(gamesCollection);
-            const games: DocumentData[] = [];
+            const gamesData: Game[] = [];
             querySnapshot.forEach((doc) => {
-                const gameData = doc.data();
-                games.push(gameData);
+                const gameData = doc.data() as Game;
+                gamesData.push(gameData);
             });
-            console.log("Fetched games:", games); // Or use these games in your UI
+            setGames(gamesData);
         } catch (error) {
             console.error("Error fetching games:", error);
         }
     };
 
-    fetchGames();
-
-
+    useEffect(() => {
+        fetchGames();
+    }, []);
 
     return (
-
-
         <View style={{ flex: 1 }}>
-            {games.map((game: Game, i: React.Key | null | undefined) => (
-                <View key={i} style={{ marginBottom: 15 }}>  {/* Added margin for spacing */}
-                    <TouchableOpacity
-                        style={{ backgroundColor: '#f5f5f5', padding: 15 }}
-                    // onPress={() => handleGameClick(game.id)}
-                    >
-                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{game.name}</Text>
-                    </TouchableOpacity>
-                    <View style={{ padding: 15 }}>
-                        <Text>{game.howToPlay}</Text>
-                    </View>
-                </View>
+            {games.map((game: Game) => (
+                <TouchableOpacity key={game.name} onPress={() => handleGameClick(game.name)}>
+                    <GamesList title={game.name} />
+                    {expandedGames.includes(game.name) && ( // Conditionally render details
+                        <View style={{ padding: 15 }}>
+                            <Text>Min Players: {game.minPlayers}</Text>
+                            <Text>Max Players: {game.maxPlayers}</Text>
+                            <Text>How to Play: {game.howToPlay}</Text>
+                        </View>
+                    )}
+                </TouchableOpacity>
             ))}
-            {/* Replace with your desired navigation solution (e.g., React Navigation) */}
-            {/* <Link to="/home" className="btn btn-outline-primary btn-sm m-2">
-    Home
-    </Link> */}
         </View>
     );
 };
 
-export default GameAccordion;
+export default GameAccordian;

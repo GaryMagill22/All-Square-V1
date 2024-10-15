@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
-import { collection, getDocs } from "firebase/firestore";
-import { FIREBASE_DB } from '../../FirebaseConfig'; // Import your Firebase DB
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { View, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
+import Collapsible from 'react-native-collapsible'; // Import for accordion (if you're using it)
+import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
+import { FIREBASE_DB } from '@/FirebaseConfig'; // Import your Firebase configuration
 
 interface Game {
     id: string;
@@ -12,46 +12,52 @@ interface Game {
     howToPlay: string;
 }
 
+const Page: React.FC<{}> = () => {
+    const [games, setGames] = useState<Game[]>([]); // State to store fetched games
+    const [activeGame, setActiveGame] = useState<string | null>(null); // State for active game (if you're using Collapsible)
 
-
-
-
-const Games = () => {
-    const [games, setGames] = useState<Game[]>([]);
-
-
+    const handleGameClick = (gameId: string) => {
+        setActiveGame(gameId === activeGame ? null : gameId);
+    };
 
     const fetchGames = async () => {
-        const gamesCollection = collection(FIREBASE_DB, "games");
+        const db = getFirestore(); // Get Firestore instance
+        const gamesCollection = collection(db, "games"); // Reference the "games" collection
         try {
             const querySnapshot = await getDocs(gamesCollection);
-            const games: Game[] = [];
+            const gamesData: Game[] = []; // Initialize an empty array
             querySnapshot.forEach((doc) => {
                 const gameData = doc.data() as Game;
-                games.push(gameData);
+                gamesData.push(gameData);
             });
-            console.log("Fetched games:", games); // Or use these games in your UI
+            setGames(gamesData); // Update state with fetched games
         } catch (error) {
             console.error("Error fetching games:", error);
         }
     };
-    useEffect(() => {
-        fetchGames();
-    }, []);
-    fetchGames();
 
+    useEffect(() => {
+        fetchGames(); // Fetch games on component mount
+    }, []);
 
     return (
-
-
         <View style={{ flex: 1 }}>
-            {games.map((game: Game, index: number) => (
-                <View key={index} style={{ marginBottom: 15 }}>  {/* Added margin for spacing */}
-                    
-                    <View style={{ padding: 15 }}>
-                        <Text>{game.name}</Text>
-                        <Text>{game.howToPlay}</Text>
-                    </View>
+            {games.map((game: Game, i: number) => ( // Use index for key
+                <View key={i} style={{ marginBottom: 15 }}>
+                    <TouchableOpacity
+                        style={{ backgroundColor: '#f5f5f5', padding: 15 }}
+                        onPress={() => handleGameClick(game.id)} // Pass game ID for state update
+                    >
+                        <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{game.name}</Text>
+                    </TouchableOpacity>
+                    {/* Conditionally render additional info using activeGame state (if applicable) */}
+                    {activeGame === game.id && ( // Check if game is active (optional)
+                        <View style={{ padding: 15 }}>
+                            <Text>Min Players: {game.minPlayers}</Text>
+                            <Text>Max Players: {game.maxPlayers}</Text>
+                            <Text>How to Play: {game.howToPlay}</Text>
+                        </View>
+                    )}
                 </View>
             ))}
             {/* Replace with your desired navigation solution (e.g., React Navigation) */}
@@ -60,6 +66,6 @@ const Games = () => {
     </Link> */}
         </View>
     );
-}
+};
 
-export default Games;
+export default Page;
