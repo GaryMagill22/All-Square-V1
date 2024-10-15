@@ -8,6 +8,8 @@ import { useNavigation } from 'expo-router';
 import React from 'react';
 
 
+
+
 export default function Home() {
 
   const navigation = useNavigation();
@@ -17,6 +19,7 @@ export default function Home() {
 
   const navigateToGames = () => {
     navigation.navigate('games' as never);
+    console.log("Game Button Pushed");
   };
 
 

@@ -67,9 +67,6 @@ const GameAccordion: React.FC<{ games: Game[] }> = ({ games }) => {
     Home
     </Link> */}
         </View>
-
-
-
     );
 };
 
