@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 
 interface GamesListProps {
     title: string;
@@ -8,11 +8,32 @@ interface GamesListProps {
 
 const GamesList: React.FC<GamesListProps> = ({ title, subtitle }) => {
     return (
-        <View style={{ padding: 15, backgroundColor: '#f5f5f5' }}>
-            <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{title}</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>{title}</Text>
             {subtitle && <Text>{subtitle}</Text>}
         </View>
     );
 };
 
 export default GamesList;
+
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
+        margin: 15,
+        backgroundColor: '#0E7AFE',
+        borderRadius: 15,
+
+    },
+    text: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    
+});

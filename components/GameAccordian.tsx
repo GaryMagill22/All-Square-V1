@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import GamesList from './GamesList'; // Import your custom component
 import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
 import { FIREBASE_DB } from '@/FirebaseConfig'; // Import your Firebase configuration
+import { defaultStyles } from '@/constants/Styles';
+
 
 interface Game {
     id: string;
@@ -44,13 +46,13 @@ const GameAccordian: React.FC<{}> = () => {
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
+        <View >
             {games.map((game: Game) => (
                 <TouchableOpacity key={game.name} onPress={() => handleGameClick(game.name)}>
                     <GamesList title={game.name} />
                     {expandedGames.includes(game.name) && ( // Conditionally render details
                         <View style={{ padding: 15 }}>
-                            <Text>Min Players: {game.minPlayers}</Text>
+                            <Text >Min Players: {game.minPlayers}</Text>
                             <Text>Max Players: {game.maxPlayers}</Text>
                             <Text>How to Play: {game.howToPlay}</Text>
                         </View>

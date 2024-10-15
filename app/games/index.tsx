@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Collapsible from 'react-native-collapsible'; // Import for accordion (if you're using it)
 import { getFirestore, collection, getDocs, DocumentData } from 'firebase/firestore';
 import { FIREBASE_DB } from '@/FirebaseConfig'; // Import your Firebase configuration
-
+import { ScrollView } from 'react-native-gesture-handler';
 interface Game {
     id: string;
     name: string;
@@ -41,11 +41,11 @@ const Page: React.FC<{}> = () => {
     }, []);
 
     return (
-        <View style={{ flex: 1 }}>
+        <ScrollView style={styles.mainContainer}>
             {games.map((game: Game, i: number) => ( // Use index for key
                 <View key={i} style={{ marginBottom: 15 }}>
                     <TouchableOpacity
-                        style={{ backgroundColor: '#f5f5f5', padding: 15 }}
+                        style={styles.activeGame}
                         onPress={() => handleGameClick(game.id)} // Pass game ID for state update
                     >
                         <Text style={{ fontSize: 18, fontWeight: 'bold' }}>{game.name}</Text>
@@ -64,8 +64,34 @@ const Page: React.FC<{}> = () => {
             {/* <Link to="/home" className="btn btn-outline-primary btn-sm m-2">
     Home
     </Link> */}
-        </View>
+        </ScrollView>
     );
 };
 
 export default Page;
+
+const styles = StyleSheet.create({
+    mainContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 15,
+        backgroundColor: '#F7F2F9',
+    },
+    text: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    activeGame: {
+        backgroundColor: '#2F2D32',
+        padding: 15,
+        
+    },
+    activeText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+});
