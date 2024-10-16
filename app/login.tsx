@@ -18,7 +18,7 @@ const Page = () => {
     setLoading(true)
     try {
       const user = await signInWithEmailAndPassword(auth, email, password)
-      if (user) router.replace('/(tabs)')
+      if (user) router.replace('/home')
     } catch (error: any) {
       console.log(error)
       alert('Sign in failed: ' + error.message);
@@ -30,7 +30,7 @@ const Page = () => {
     setLoading(true)
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password)
-      if (user) router.replace('/(tabs)')
+      if (user) router.replace('/home')
     } catch (error: any) {
       console.log(error)
       alert('Sign in failed: ' + error.message);

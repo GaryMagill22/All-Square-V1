@@ -40,7 +40,7 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: 'Home',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-account" size={26} color="black" />,
@@ -61,7 +61,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="two"
+        name="profile"
         options={{
           title: 'Profile',
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="golf-cart" size={24} color="black" />,
