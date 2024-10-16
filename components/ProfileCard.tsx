@@ -7,6 +7,7 @@ import { IconSource } from 'react-native-paper/lib/typescript/components/Icon';
 import { ThemeProp } from 'react-native-paper/lib/typescript/types';
 import CardTitle from 'react-native-paper/lib/typescript/components/Card/CardTitle';
 import { User } from 'firebase/auth';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface ProfileCardProps {
     user?: User | null;
@@ -48,6 +49,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
             <Card>
                 <Avatar.Image style={styles.AvatarImage} size={80} source={require('../assets/images/avatar-circle.png')} />
                 <Card.Title title={currentUser?.displayName} titleStyle={styles.cardTitle} />
+                <Text style={styles.profileText}>{currentUser?.email || 'Unknown Email'}</Text>
+                <Text style={styles.profileText}>Handicap: {handicap}</Text>
                 <Card.Content style={styles.cardContent}>
                     {isEditing ? (
                         <ScrollView style={styles.scrollView}>
@@ -72,19 +75,25 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
                             <TextInput
                                 label="Handicap"
                                 value={handicap.toString()}
-                                onChangeText={setHandicap}
+                                onChangeText={(text) => setHandicap(Number(text))}
                                 // placeholder="Enter Handicap"
                                 keyboardType="numeric"
                             />
                         </ScrollView>
                     ) : (
-                        <>
-                            <Text style={styles.profileText}>{currentUser?.email || 'Unknown Email'}</Text>
-                            <Text style={styles.profileText}>Handicap: {handicap}</Text>
-                        </>
+                        <View >
+                            <View style={styles.walletContainer}>
+                                <Text style={styles.title}>Wallet Balance: </Text>
+                                <Text style={styles.balance}>$356.76</Text>
+                            </View>
+                            <View style={styles.fundContainer} >
+                                <Button style={styles.button} mode="elevated">Deposit Funds</Button>
+                                <Button style={styles.button} mode="elevated">Withdraw Funds</Button>
+                            </View>
+                        </View>
                     )}
                 </Card.Content>
-                <Card.Actions>
+                <Card.Actions style={styles.actionContainer}>
                     {isEditing ? (
                         <Button mode="outlined" onPress={saveProfile} disabled={isLoading}>
                             {isLoading ? 'Saving...' : 'Save Profile'}
@@ -94,6 +103,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
                             Edit Profile
                         </Button>
                     )}
+
+
                 </Card.Actions>
             </Card>
         </View>
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     card: {
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 10,
+        borderRadius: 15,
         padding: 10,
     },
     AvatarImage: {
@@ -116,21 +127,60 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     cardTitle: {
-        fontSize: 18,
+        fontSize: 24,
         fontWeight: 'bold',
-        marginBottom: 10,
+        marginBottom: 5,
         textAlign: 'center',
     },
     cardContent: {
         alignItems: 'center',
+        height: 200,
     },
     profileText: {
         textAlign: 'center',
         fontSize: 16,
-        marginBottom: 5,
+        paddingBottom: 10,
     },
     scrollView: {
         maxHeight: 1000,
         width: 200,
     },
+    walletContainer: {
+        flexDirection: 'column',
+        gap: 10,
+        marginBottom: 10,
+        backgroundColor: '#B8B3BA',
+        borderRadius: 15,
+        padding: 10,
+        height: 'auto',
+    },
+    title: {
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: '600',
+        fontStyle: 'normal',
+    },
+    actionContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column',
+    },
+    fundContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: 10,
+    },
+    button: {
+        backgroundColor: '#EEE9F0',
+        borderRadius: 10,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+    },
+    balance: {
+        textAlign: 'center',
+        fontSize: 14,
+        fontWeight: 'bold',
+    }
 });
