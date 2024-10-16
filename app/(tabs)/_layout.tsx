@@ -67,6 +67,20 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="golf-cart" size={24} color="black" />,
         }}
       />
+      <Tabs.Screen
+      name="golf"
+      options={{
+        title: 'Golf',
+        tabBarIcon: ({ color }) => <MaterialCommunityIcons name="golf-tee" size={24} color="black" />,
+      }}
+      />
+      <Tabs.Screen
+      name="rounds"
+      options={{
+        title: 'Rounds',
+        tabBarIcon: ({ color }) => <MaterialCommunityIcons name="calendar-outline" size={24} color="black" />,
+      }}
+      />
     </Tabs>
   );
 }

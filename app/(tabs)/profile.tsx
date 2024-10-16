@@ -1,13 +1,12 @@
 import { Button, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { FIREBASE_AUTH } from '@/FirebaseConfig';
-// import ProfileCard from '@/components/ProfileCard';
-
+import  ProfileCard from '@/components/ProfileCard';
 
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
-      {/* <ProfileCard User={FIREBASE_AUTH.currentUser} /> */}
+      <ProfileCard  />
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <Button title="Sign Out" onPress={() => FIREBASE_AUTH.signOut()} />
       {/* Account deletion required in IOS store */}

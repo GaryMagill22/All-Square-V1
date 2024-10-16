@@ -37,6 +37,7 @@ const BottomLoginSheet = () => {
         }
       }} asChild style={[defaultStyles.btn, styles.btnDark]}>
         <TouchableOpacity>
+        <Ionicons name="log-in-outline" size={20} style={styles.btnIcon} color={ColorPalette.light}/>
           <Text style={styles.btnDarkText}>Log in</Text>
         </TouchableOpacity>
       </Link>

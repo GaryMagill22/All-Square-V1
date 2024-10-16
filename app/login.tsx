@@ -30,7 +30,7 @@ const Page = () => {
     setLoading(true)
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password)
-      if (user) router.replace('/home')
+      if (user) router.replace('/profile')
     } catch (error: any) {
       console.log(error)
       alert('Sign in failed: ' + error.message);
