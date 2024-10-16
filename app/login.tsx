@@ -5,14 +5,16 @@ import { defaultStyles } from '../constants/Styles'
 import { FIREBASE_AUTH } from '../FirebaseConfig'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const Page = () => {
-  const { type } = useLocalSearchParams<{type: string}>();
+  const { type } = useLocalSearchParams<{ type: string }>();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const auth = FIREBASE_AUTH;
+
 
   const signIn = async () => {
     setLoading(true)
@@ -26,17 +28,20 @@ const Page = () => {
     setLoading(false)
   }
 
+
   const signUp = async () => {
-    setLoading(true)
+    setLoading(true);
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password)
-      if (user) router.replace('/profile')
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+      if (user) {
+        // Redirect to profile page for user to complete their profile
+        router.replace('/profile');
+      }
     } catch (error: any) {
-      console.log(error)
-      alert('Sign in failed: ' + error.message);
+      // ... error handling
     }
-    setLoading(false)
-  }
+    setLoading(false);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -46,7 +51,7 @@ const Page = () => {
     >
       {loading && (
         <View style={defaultStyles.loadingOverlay}>
-          <ActivityIndicator size='large' color='#fff'/>
+          <ActivityIndicator size='large' color='#fff' />
         </View>
       )}
       {/* <Image style={styles.logo} source={require('../assets/images/logo-white.png')} /> */}
@@ -55,7 +60,7 @@ const Page = () => {
         {type === 'login' ? 'Welcome back' : 'Create your account'}
       </Text>
 
-      <View style={{marginBottom: 20 }}>
+      <View style={{ marginBottom: 20 }}>
         <TextInput
           autoCapitalize='none'
           placeholder='Email'

@@ -1,33 +1,31 @@
-import { Button, StyleSheet } from 'react-native';
+import { StyleSheet, TextInput, ScrollView } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { FIREBASE_AUTH } from '@/FirebaseConfig';
 import  ProfileCard from '@/components/ProfileCard';
+import { useState } from 'react';
+import { Avatar, Card, Button } from 'react-native-paper';
+import { getAuth } from 'firebase/auth';
 
-export default function ProfileScreen() {
-  return (
-    <View style={styles.container}>
-      <ProfileCard  />
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Button title="Sign Out" onPress={() => FIREBASE_AUTH.signOut()} />
-      {/* Account deletion required in IOS store */}
-      <Button title="Delete Account" onPress={() => FIREBASE_AUTH.currentUser?.delete()} />
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
+
+const ProfileScreen = () => {
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [changePassword, setChangePassword] = useState('');
+  const [handicap, setHandicap] = useState('');
+
+
+
+  const user = getAuth().currentUser;
+
+  
+
+    return (  
+      <ProfileCard user={user}  />
+    );
+  };
+  
+
+export default ProfileScreen;
