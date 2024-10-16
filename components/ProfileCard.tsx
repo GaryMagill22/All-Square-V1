@@ -87,8 +87,8 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ user }) => {
                                 <Text style={styles.balance}>$356.76</Text>
                             </View>
                             <View style={styles.fundContainer} >
-                                <Button style={styles.button} mode="elevated">Deposit Funds</Button>
-                                <Button style={styles.button} mode="elevated">Withdraw Funds</Button>
+                                <Button style={styles.button} mode="elevated" >Deposit Funds</Button>
+                                <Button style={styles.button} mode="elevated" >Withdraw Funds</Button>
                             </View>
                         </View>
                     )}
