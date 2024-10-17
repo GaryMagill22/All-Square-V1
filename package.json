@@ -8,10 +8,17 @@
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
-    "lint": "eslint --ext .js,.ts ."
+    "lint": "eslint --ext .js,.ts .",
+    "firebase:emulate": "firebase use default && firebase emulators: start"
   },
   "jest": {
     "preset": "jest-expo"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",

@@ -15,5 +15,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "functions/callableFunctions/serverFunction.js", "functions/src/index.js"  ]
 }
