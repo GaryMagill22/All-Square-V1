@@ -1,15 +1,13 @@
 // import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
 // import { View, Text, StyleSheet } from 'react-native';
 // import { Elements } from '@stripe/react-stripe-js';
-// import { loadStripe } from '@stripe/stripe-js';
 
 
 // import AsyncStorage from '@react-native-async-storage/async-storage';
-// import Payment from '../Components/Payment';
+// // import Payment from '../Components/Payment';
 
 // // Public Key
-// const stripePromise = loadStripe('pk_test_51NpbUBHJaZP62m3KKuApJPp7c67kL8vOpxwCr4ZDVxgDE1c01CpnNqSNbURSEzKnyGTOEtVLOV38NOq3pRDY29Px00WnKFvNsV');
+// // const stripePromise = loadStripe('pk_test_51NpbUBHJaZP62m3KKuApJPp7c67kL8vOpxwCr4ZDVxgDE1c01CpnNqSNbURSEzKnyGTOEtVLOV38NOq3pRDY29Px00WnKFvNsV');
 
 // const FundWallet = () => {
 //     const { amount } = useParams();

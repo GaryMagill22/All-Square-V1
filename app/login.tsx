@@ -6,7 +6,7 @@ import { FIREBASE_AUTH } from '../FirebaseConfig'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, UserCredential } from 'firebase/auth';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getFunctions, httpsCallable, HttpsCallableResult } from 'firebase/functions';
+import { getFunctions, httpsCallable, HttpsCallableResult,  } from 'firebase/functions';
 import { FirebaseError } from 'firebase/app';
 
 
@@ -38,10 +38,10 @@ const Page = () => {
         // User successfully signed in
         // Initialize or get the user's wallet
         const functions = getFunctions();
-        const createWallet = httpsCallable<unknown, WalletResult>(functions, 'createOrGetStripeCustomerWithWallet');
+        const createWallet = httpsCallable(functions, 'createOrGetStripeCustomerWithWallet');
 
         try {
-          const result: HttpsCallableResult<WalletResult> = await createWallet();
+          const result = await createWallet() as HttpsCallableResult<WalletResult>;
           const customerId = result.data.customerId;
 
           if (customerId) {
@@ -49,7 +49,7 @@ const Page = () => {
 
             // Store the customerId using AsyncStorage
             await AsyncStorage.setItem('stripeCustomerId', customerId);
-
+            Alert.alert('Wallet Initialized', 'Your wallet has been initialized successfully');
             // Navigate to home screen
             router.replace('/home');
           } else {
@@ -57,13 +57,15 @@ const Page = () => {
           }
         } catch (walletError) {
           console.error('Error initializing wallet:', walletError);
-          // Show error to the user
+          if (walletError instanceof FirebaseError) {
+            console.error('Firebase Error Code:', walletError.code);
+            console.error('Firebase Error Message:', walletError.message);
+          }
           Alert.alert(
             'Wallet Initialization Failed',
             'Failed to initialize wallet: ' + ((walletError as Error).message || 'Unknown error')
           );
-          // You might want to decide whether to proceed to home screen or stay on login page
-          // For now, we'll stay on the login page
+          router.replace('/');
         }
       }
     } catch (error) {
@@ -73,6 +75,8 @@ const Page = () => {
       setLoading(false);
     }
   };
+
+  // OLD VERSION WITHOUT WALLET INITIALIZATION
   // const signIn = async () => {
   //   setLoading(true)
   //   try {
